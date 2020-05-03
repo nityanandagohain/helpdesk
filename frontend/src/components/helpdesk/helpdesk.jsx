@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
+import "./helpdesk.css"
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
-import styled from "styled-components";
 import Linkify from 'react-linkify';
 import moment from "moment";
-import "./helpdesk.css"
 import {
   ThemeProvider,
   ChatList,
@@ -19,8 +18,6 @@ import {
   MessageGroup,
   MessageText,
   TextComposer,
-  IconButton,
-  AddIcon,
   TextInput,
   SendButton
 } from "@livechat/ui-kit";
