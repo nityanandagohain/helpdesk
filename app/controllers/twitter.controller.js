@@ -23,7 +23,7 @@ exports.getTweets = (req, res, next) => {
     );
 }
 
-exports.ReplyTweet = (req, res, next) => {
+exports.replyTweet = (req, res, next) => {
     const { statusID, status } = req.body;
     const client = utils.getTwitterClient()
     const params = {

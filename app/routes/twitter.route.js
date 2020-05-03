@@ -5,7 +5,7 @@ const passport = require("passport");
 
 
 router.get('/getall', authenticate, twitter.getTweets);
-router.post('/', authenticate, twitter.ReplyTweet);
+router.post('/', authenticate, twitter.replyTweet);
 
 
 module.exports = router;
