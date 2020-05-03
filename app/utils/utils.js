@@ -1,5 +1,8 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/user.model.js');
+const Twitter = require("twitter")
+const twitterConfig = require('../../twitter.config.js');
+
 
 const createToken = (auth) => {
     return jwt.sign({
@@ -7,6 +10,15 @@ const createToken = (auth) => {
     }, 'my-secret', {
         expiresIn: 60 * 120
     });
+}
+
+const getTwitterClient = () => {
+    return new Twitter({
+        consumer_key: twitterConfig.consumerKey,
+        consumer_secret: twitterConfig.consumerSecret,
+        access_token_key: twitterConfig.accessToken,
+        access_token_secret: twitterConfig.secretKey
+    })
 }
 
 const getCurrentUser = (req, res, next) => {
@@ -43,5 +55,6 @@ module.exports = {
     getCurrentUser,
     getOne,
     generateToken,
-    sendToken
+    sendToken,
+    getTwitterClient
 }

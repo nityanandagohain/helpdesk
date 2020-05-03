@@ -1,20 +1,29 @@
 import React, { Component } from 'react';
 import TwitterLogin from 'react-twitter-auth';
+// import axios from 'axios';
+import HelpDesk from './components/helpdesk/helpdesk';
 
 class App extends Component {
 
-  constructor() {
-    super();
-    this.state = { isAuthenticated: false, user: null, token: ''};
+  state = { isAuthenticated: false, user: null, token: '', tweets : []};
+  
+  componentDidMount() {
+    let token = localStorage.getItem("token");
+    let user = localStorage.getItem("user");
+    if (token){
+      this.setState({isAuthenticated: true, user: user, token: token});
+    }
   }
-
   onSuccess = (response) => {
     const token = response.headers.get('x-auth-token');
     response.json().then(user => {
       if (token) {
         this.setState({isAuthenticated: true, user: user, token: token});
+        localStorage.setItem("token", token)
+        localStorage.setItem("user", user)
       }
     });
+    
   };
 
   onFailed = (error) => {
@@ -23,6 +32,8 @@ class App extends Component {
 
   logout = () => {
     this.setState({isAuthenticated: false, token: '', user: null})
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
   };
 
   render() {
@@ -33,12 +44,14 @@ class App extends Component {
           <div>
             {this.state.user.email}
           </div>
+          <HelpDesk token={this.state.token}/>
           <div>
             <button onClick={this.logout} className="button" >
               Log out
             </button>
           </div>
         </div>
+        
       ) :
       (
         <TwitterLogin loginUrl="/api/v1/auth/twitter"

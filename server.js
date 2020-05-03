@@ -32,7 +32,8 @@ UserModel()
 app.use(passport.initialize());
 require('./passport')(passport);
 
-app.use('/api/v1/', require("./app/routes/auth.route"));
+app.use('/api/v1/auth', require("./app/routes/auth.route"));
+app.use('/api/v1/twitter', require("./app/routes/twitter.route"));
 app.listen(4000);
 module.exports = app;
 

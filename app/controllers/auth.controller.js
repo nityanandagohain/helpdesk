@@ -1,9 +1,3 @@
-// const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcrypt");
-// const registerValidator = require("../validators/register.validator.js");
-// const loginValidator = require("../validators/login.validator.js");
-// const User = require("../models/user.model.js");
-
 const twitterConfig = require('../../twitter.config.js');
 const User = require('../models/user.model.js');
 const request = require('request')
@@ -25,7 +19,7 @@ exports.reverse = (req, res) => {
     });
 }
 
-exports.twitter = (req, res, next) => {
+exports.twitterAuth = (req, res, next) => {
     request.post({
             url: `https://api.twitter.com/oauth/access_token?oauth_verifier`,
             oauth: {
