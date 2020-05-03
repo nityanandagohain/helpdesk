@@ -4,8 +4,10 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "serve": "node server.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "heroku-postbuild": "cd frontend && yarn install && npm run build"
+
     },
     "keywords": [],
     "author": "",
@@ -20,5 +22,8 @@
         "passport-twitter-token": "^1.3.0",
         "request": "^2.88.2",
         "twitter": "^1.7.1"
+    },
+    "engines": {
+        "node": "10.16.0"
     }
 }
