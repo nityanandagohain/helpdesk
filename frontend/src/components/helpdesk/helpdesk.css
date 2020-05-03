@@ -1,0 +1,23 @@
+.progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+}
+
+.chat-container {
+    height: calc(100vh - 64px);
+    width: 100%;
+}
+
+.scrollable-grid {
+    height: calc(100vh - 64px);
+    overflow-y: scroll;
+    width: 30%;
+}
+
+.new-grid {
+    height: calc(100vh - 64px);
+    overflow-y: scroll;
+    width: 69%;
+}

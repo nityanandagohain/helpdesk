@@ -37,7 +37,6 @@ const getOne = (req, res) => {
 
     delete user['twitterProvider'];
     delete user['__v'];
-
     res.json(user);
 }
 

@@ -22,3 +22,16 @@ exports.getTweets = (req, res, next) => {
         }
     );
 }
+
+exports.ReplyTweet = (req, res, next) => {
+    const { statusID, status } = req.body;
+    const client = utils.getTwitterClient()
+    const params = {
+        in_reply_to_status_id: statusID,
+        status
+    }
+    client.post('/statuses/update', params, (error, tweet, response) => {
+        if (error) res.sendStatus(500);
+        res.json(tweet);
+    })
+}

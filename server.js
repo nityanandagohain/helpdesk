@@ -18,7 +18,7 @@ app.use(bodyParser.json())
 
 
 mongoose.set('useFindAndModify', false);
-mongoose.connect("'mongodb://localhost:27017/twitter-demo'", { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+mongoose.connect("'mongodb://localhost:27017/twitter-demo", { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
     if (err) {
         console.log(err)
     }

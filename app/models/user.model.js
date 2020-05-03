@@ -10,6 +10,9 @@ module.exports = function() {
             unique: true,
             match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
         },
+        username: {
+            type: String
+        },
         twitterProvider: {
             type: {
                 id: String,
@@ -27,6 +30,7 @@ module.exports = function() {
             if (!user) {
                 var newUser = new that({
                     email: profile.emails[0].value,
+                    username: profile.username,
                     twitterProvider: {
                         id: profile.id,
                         token: token,
