@@ -70,7 +70,9 @@ class HelpDesk extends Component {
   };
 
   ReplyTweet = () => {
-    console.log(this.state.currentThread)
+    if (currentThread.length == 0){
+      alert("Please select a Tweet")
+    }
     const { message, currentThread, currentID } = this.state;
     this.setState({ replied: true });
 
@@ -186,9 +188,6 @@ const TweetList = (tweets, fetchTweetThread, currentID) => {
 };
 
 const TweetThread = (currentThread, replied) => {
-  if (currentThread.length == 0){
-    alert("Please select a Tweet")
-  }
   const user = JSON.parse(localStorage.getItem("user"));
   console.log(user, user.username)
   return (
