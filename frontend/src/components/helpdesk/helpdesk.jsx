@@ -189,6 +189,9 @@ const TweetList = (tweets, fetchTweetThread, currentID) => {
 };
 
 const TweetThread = (currentThread, replied) => {
+  if (currentThread.length == 0){
+    alert("Please select a Tweet")
+  }
   const user = JSON.parse(localStorage.getItem("user"));
   console.log(user, user.username)
   return (
