@@ -18,7 +18,7 @@ app.use(bodyParser.json())
 
 
 mongoose.set('useFindAndModify', false);
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/twitter-demo", { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
     if (err) {
         console.log(err)
     }
@@ -44,7 +44,7 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });
