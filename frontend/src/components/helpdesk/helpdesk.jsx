@@ -29,11 +29,13 @@ class HelpDesk extends Component {
     currentID: "",
     replied: false,
     currentThread: [],
-    message: ""
+    message: "",
+    threadSelected: false,
   }
   componentDidMount() {
     axios.get("/api/v1/twitter/getall", { headers: { 'x-auth-token': this.props.token } })
       .then((res) => {
+        console.log(res)
         let data = res.data
         data = data.filter(tweet => !tweet.errors);
         data = data.sort(
@@ -64,15 +66,12 @@ class HelpDesk extends Component {
         return false;
       }
     });
-    this.setState({ currentThread, currentID: tweetID });
+    this.setState({ currentThread, currentID: tweetID, threadSelected: true });
 
     console.log(this.state.currentThread)
   };
 
   ReplyTweet = () => {
-    if (currentThread.length == 0){
-      alert("Please select a Tweet")
-    }
     const { message, currentThread, currentID } = this.state;
     this.setState({ replied: true });
 
@@ -80,7 +79,7 @@ class HelpDesk extends Component {
       status: `@${currentThread[0].user.screen_name} ${message}`,
       statusID: currentThread[0].id_str,
     }, { headers: { 'x-auth-token': this.props.token } })
-      .then((data) =>{
+      .then((data) => {
         data = data.data
         console.log("replied");
         const updatedTweets = [data, ...this.state.tweets].sort(
@@ -103,7 +102,7 @@ class HelpDesk extends Component {
 
   render() {
     console.log("ll", this.state.tweets);
-    const { tweets, currentID, replied, currentThread } = this.state;
+    const { tweets, currentID, replied, currentThread, threadSelected } = this.state;
     return (
       <div>
         {
@@ -129,16 +128,19 @@ class HelpDesk extends Component {
                         <div style={{ height: "70vh" }}>
                           {TweetThread(currentThread, replied)}
                         </div>
-                        <TextComposer
-                          style={{ minHeight: 100 }}
-                          onChange={this.updateNewStatus}
-                          onSend={this.ReplyTweet}
-                        >
-                          <Row align="center">
-                            <TextInput />
-                            <SendButton fit />
-                          </Row>
-                        </TextComposer>
+                        {
+                          threadSelected ? <TextComposer
+                            style={{ minHeight: 100 }}
+                            onChange={this.updateNewStatus}
+                            onSend={this.ReplyTweet}
+                          >
+                            <Row align="center">
+                              <TextInput />
+                              <SendButton fit />
+                            </Row>
+                          </TextComposer> :
+                            <div></div>
+                        }
                       </div>
                     </Grid>
                   </div>
@@ -178,7 +180,7 @@ const TweetList = (tweets, fetchTweetThread, currentID) => {
                     {moment(new Date(tweet.created_at)).format("LT")}
                   </Subtitle>
                 </Row>
-                <Subtitle ellipsis>{tweet.text}</Subtitle>
+                <Subtitle style={{ maxWidth: 100 }} ellipsis>{tweet.text}</Subtitle>
               </Column>
             </ChatListItem>
           );
@@ -200,8 +202,9 @@ const TweetThread = (currentThread, replied) => {
           isOwn={user.username === thread.user.screen_name}
         >
           <Message
+            isOwn={user.username === thread.user.screen_name}
             authorName={
-              user.username === thread.user.screen_name ? "You" : thread.user.name
+              user.username === thread.user.screen_name ? "Me" : thread.user.name
             }
             date={`${moment(new Date(thread.created_at)).format(
               "ll"
